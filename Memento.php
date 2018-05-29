@@ -11,6 +11,11 @@
 
 // 优点： 1、给用户提供了一种可以恢复状态的机制，可以使用户能够比较方便地回到某个历史的状态。 2、实现了信息的封装，
 
+
+
+
+
+//Memento负责存储Originator对象的内部状态,并可防止originator以外的其他对象访问备忘录Memento
 class Memento {
 
     private  $state;
@@ -27,7 +32,8 @@ class Memento {
 
  }
 
- //原始类
+ //原始类 Originator //负责创建一个备忘录Memento，用以记录当前时刻
+//它的内部状态,并可使用备忘录恢复内部状态
 class Originator {
 
     private  $state;
@@ -65,13 +71,13 @@ class Originator {
     }
  
     public function get($index){
-       return $this->mementoList[$index];
+       return $this->mementArray[$index];
     }
  }
 
 //----------------开始测试-------------------
  $originator = new Originator();
- $careTaker = new CareTaker();
+ $careTaker = new CareTaker(); //备忘录管理类
  $originator->setState("State #1");
  $originator->setState("State #2");
  $careTaker->add($originator->saveStateToMemento());
@@ -79,9 +85,10 @@ class Originator {
  $careTaker->add($originator->saveStateToMemento());
  $originator->setState("State #4");
 
-echo "Current State+".$originator->getState();
-echo "$originator->getStateFromMemento($careTaker->get(0))";
-echo "First saved State:$originator->getState()";
-echo $originator->getStateFromMemento($careTaker->get(1));
-// System.out.println("First saved State: " + ); 
-//       System.out.println("Second saved State: " + originator.getState());
+
+
+echo "Current State：".$originator->getState()."\n"; //当前状态 #4
+$originator->getStateFromMemento($careTaker->get(0)); //回到第一个状态 
+echo "First saved State: ".$originator->getState()."\n"; //当前状态为第一个状态#2
+echo $originator->getStateFromMemento($careTaker->get(1)); //回到第二个状态 
+echo "Second saved State: ".$originator->getState()."\n";  //当前状态为第一个状态#3
