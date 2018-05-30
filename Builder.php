@@ -23,6 +23,7 @@ abstract class Builder
   abstract public function buildShell($Shell);   //会造车子的外形
   abstract public function getResult();  //造完车，需要将车交给厂长 ,返回对象
 }
+
 // 应聘者需要有能力满足招聘的要求
 class CarBuilder extends Builder
 {
