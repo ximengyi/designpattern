@@ -37,6 +37,12 @@ class Employee {
  
     public function toString(){
        echo "员工 :[ 姓名 : ". "{$this->name}"  .", 部门 : " . "{$this->dept}" . ", 工资 :". "{$this->salary}"." ]\n";
+
+      foreach($this->getSubordinates() as $value)
+      {
+        $value->toString(); 
+      }
+
     }   
  }
 
@@ -76,11 +82,3 @@ class Employee {
 
 //打印公司所有成员
 $CEO->toString();
-foreach($CEO->getSubordinates() as $value)
-{
-    $value->toString();
-    foreach($value->getSubordinates() as $value2){
-      $value2->toString();
-    }
-
-}
