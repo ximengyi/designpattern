@@ -1,16 +1,22 @@
 <?php
-//媒体播放器接口
+
+// 我们通过下面的实例来演示适配器模式的使用。
+// 其中，音频播放器设备只能播放 mp3 文件，通过使用一个更高级的音频播放器来播放 vlc 和 mp4 文件。
+
+//普通媒体播放器接口
  interface MediaPlayer
 {
     public function  play($audioType, $fileName);
 }
-//高级媒体播放器
+
+//高级媒体播放器接口
 interface AdvancedMediaPlayer 
 {    
     public function playVlc($fileName);
     public function playMp4($fileName);
 }
 
+// vlc播放器类实现高级媒体播放器接口
  class VlcPlayer implements AdvancedMediaPlayer{
    
     public function  playVlc($fileName) 
@@ -25,7 +31,7 @@ interface AdvancedMediaPlayer
     }
 
  }
-
+//mp4播放器类
 class Mp4Player implements AdvancedMediaPlayer{
 
 
@@ -41,24 +47,11 @@ class Mp4Player implements AdvancedMediaPlayer{
     }
  }
 
- // 媒体适配器实现媒体播放器接口
+ // 媒体适配器类实现媒体播放器接口
 class MediaAdapter implements MediaPlayer {
 
     protected $advancedMusicPlayer;
 
-    // public  function  __construct(AdvancedMediaPlayer $advancedMusicPlayer)
-    // {
-    //    $this->advancedMusicPlayer = $advancedMusicPlayer;
-    // } 
- 
-    // public function MediaAdapter($audioType)
-    // {
-    //    if($audioType == "vlc" ){
-    //       $this->advancedMusicPlayer = new VlcPlayer();            
-    //    } else if ($audioType=='mp4'){
-    //       $this->advancedMusicPlayer = new Mp4Player();
-    //    }    
-    // }
     public  function  __construct($audioType)
     {
         if($audioType == "vlc" ){
@@ -77,7 +70,7 @@ class MediaAdapter implements MediaPlayer {
        }
     }
  }
-//音频播放器
+//音频播放器,通过适配器模式播放vlc格式文件和MP4格式文件
 class AudioPlayer implements MediaPlayer {
   //  MediaAdapter mediaAdapter; 
     public function play($audioType, $fileName) {        
