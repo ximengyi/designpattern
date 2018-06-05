@@ -59,31 +59,35 @@ class BuyStock implements Order {
     }
 
  }
-
+//命令执行管理者
  class Broker{
      public  $orderArray = [];
 
+     //将命令拿进来
      public function takeOrder(Order $order){
         array_push($this->orderArray,$order);
 
      }
-  
+   //一条一条执行命令
      public function placeOrders(){
       foreach($this->orderArray as $value){
           $value->execute();
 
       }
-
+        //执行完命令队列清空
          $this->orderArray = [];
      }
 
  }
 
+ //创建一条袜子
 $abcstock = new Stock();
 
+//创建买袜子命令和卖袜子命令
 $buyStockOrder = new BuyStock($abcstock);
 $sellStockOrder = new SellStock($abcstock);
 
+//创建命令执行管理者
 $broker = new Broker();
 $broker->takeOrder($buyStockOrder);
 $broker->takeOrder($sellStockOrder); 
