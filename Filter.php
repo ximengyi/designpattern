@@ -97,7 +97,7 @@ class AndCriteria implements Criteria {
   
    public function meetCriteria( $persons) {
       $firstCriteriaPersons = $this->criteria->meetCriteria($persons);        
-      return $otherCriteria->meetCriteria($firstCriteriaPersons);
+      return $this->otherCriteria->meetCriteria($firstCriteriaPersons);
    }
 }
 
@@ -139,6 +139,11 @@ printPerson($result);
 //过滤单身狗
 echo "Singles: \n";
 $result = $single->meetCriteria($persons);
+printPerson($result);
+
+//过滤单身男人
+echo "SingleMale: \n";
+$result = $singleMale->meetCriteria($persons);
 printPerson($result);
 
 
